@@ -1,0 +1,2 @@
+"due","to","pose","uncertainty","merely","executing","a","plannedtobe","stable","grasp","usually","results","in","an","unstable","grasp","in","the","physical","world","in","our","previous","work","k","we","proposed","a","tactile","experience","based","grasping","pipeline","which","utilizes","tactile","feedback","to","adjust","hand","posture","during","the","grasping","task","of","known","objects","and","improves"
+

@@ -1,0 +1,3 @@
+./a.out -h a -w ./test/example.txt
+./a.out -c ./test/example1.txt
+./a.out -n 2 ./test/example3.txt
