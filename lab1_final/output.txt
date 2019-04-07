@@ -1,8 +1,0 @@
-The num of path is 6
-apple err 
-apple e 
-e err 
-ida apple 
-nt tra 
-tra apple 
--------------clean--------------
