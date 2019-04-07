@@ -8,6 +8,7 @@
 #include "Header.h"
 #include <iostream>
 #include <string.h>
+#include <stdlib.h>
 
 Core::Core(){}
 
@@ -124,16 +125,31 @@ int* Core::gen_chain_specific_word(char* words[], int len, vector<vector<char *>
 //5.字符数组中有重复字符串
 int Core::check(char* words[], int len, char head, char tail){
     int valid = 1;
-    if(len <= 0 ) {
-        cout << "len is smaller than 0";
+    if(len <= 0 ){
+        try{
+            throw("len is smaller than 0!\n");
+        }catch(const char * msg){
+            cout<<msg<<endl;
+            exit(0);                           
+        }
         valid = 0;
     }
     if( (head < 'a' || head >'z')&& head!='0') {
-        cout<< "head is invalid\n";
+        try{
+            throw("head is invalid!\n");
+        }catch(const char * msg){
+            cout<<msg<<endl;
+            exit(0);               
+        }
         valid = 0;
     }
     if((tail < 'a' || tail >'z')&& tail!='0') {
-        cout<< "tail is invalid\n";
+        try{
+            throw("tail is invalid!\n");
+        }catch(const char * msg){
+            cout<<msg<<endl;
+            exit(0);                                                    
+        }
         valid = 0;
     }
     int i = 0;
@@ -141,13 +157,23 @@ int Core::check(char* words[], int len, char head, char tail){
         int word_len;
         word_len = (int)strlen(words[i]);
         if(word_len == 0 ){
-            cout << "there is blank word in these words\n";
+            try{
+                throw("there is blank word in these words!\n");
+            }catch(const char * msg){
+                cout<<msg<<endl;
+                exit(0);                                                    
+            }
             valid = 0;
             break;
         }
         for(int j = 0; j < word_len; j++){
             if(words[i][j] < 'a' || words[i][j] > 'z') {
-                cout << " there is wrong character in words\n";
+                try{
+                    throw("there is wrong character in words!\n");
+                }catch(const char * msg){
+                    cout<<msg<<endl;
+                    exit(0);                                                    
+                }
                 valid = 0;
                 break;
             }
@@ -160,7 +186,12 @@ int Core::check(char* words[], int len, char head, char tail){
     Quick_sort(0, len-1, words);
     acc_len = Delete_dup(len, words);
     if(acc_len < len) {
-        cout << "there is duplicate words in the word array\n";
+        try{
+            throw("there is duplicate words in the word array!\n");
+        }catch(const char * msg){
+            cout<<msg<<endl;
+            exit(0);                                                    
+        }
         valid = 0;
     }
     
@@ -296,6 +327,16 @@ int Core::Find_Wordlist_(const int num,const char begin ,const char end,const in
                 path_value=1;
             step=0;
             path[step]=i;
+            if(word_list[i].last_letter == end) {
+                if(end_path_value < path_value) {
+                    memcpy(end_path, path, sizeof(int)*MAX_WORD_NUM);
+                    end_path_value =path_value;
+                }
+            }
+            if(path_value > max_path_value) {
+                memcpy(max_path, path, sizeof(int)*MAX_WORD_NUM);
+                max_path_value =path_value;
+            }
             int k = find(i,end,type,num);
             if(k == 1){
                 output_(type,end,4);
@@ -373,8 +414,13 @@ char** Core::Get_word(const char* filename) {
      string passage;
      ifstream in;
      in.open(filename);
-    if (! in.is_open() ) 
-         cout << "Error opening file\n";
+    if (! in.is_open())
+        try{
+            throw("Error opening file!\n");
+        }catch(const char * msg){
+            cout<<msg<<endl;
+            exit(0);
+        }
      int count =0;
      int flag = 0;//用来指示前一个字符是否为字母，1是，0不是
      int word_len = 0;
@@ -409,6 +455,14 @@ char** Core::Get_word(const char* filename) {
          }
          in >> passage;
      }while( !in.eof() );
+    if(count == 0){
+        try{
+            throw("There is no word in the file!\n");
+        }catch(const char * msg){
+            cout<<msg<<endl;
+            exit(0);
+        }
+    }
      Quick_sort(0, count-1, words);
      count = Delete_dup(count, words);
      words_ = words;

@@ -11,13 +11,15 @@
 #include <string.h>
 #include <string>
 #include "main.cpp"
+#include <stdlib.h>
+#include <stdexcept>
 
 using namespace std;
 //错误说明
 //1.-x ，x不对
 //2.完全不对
 //3.-x 后没跟参数
-int fake_main(int argc, char * argv[]){
+int fake_main(int argc, const char * argv[]){
     char begin = '0', end = '0';
     const char * file ={0};
     int type =1;
@@ -27,8 +29,13 @@ int fake_main(int argc, char * argv[]){
         if(strcmp(argv[argindex],"-w") == 0) {
             argindex++;
             if (argindex >= argc) {
-                cout<< "Command wrong, there need parament after -w\n\n";
-                exit(0);
+                try{
+                    throw(runtime_error("Command wrong, there need parameter after -w!\n\n"));
+                }catch(runtime_error err){
+                    cout<<err.what()<<endl;
+                    exit(0);    
+                }
+                
             }
             file = argv[argindex];
             if(num == -1)
@@ -40,8 +47,12 @@ int fake_main(int argc, char * argv[]){
         else if(strcmp(argv[argindex],"-c") == 0){
             argindex++;
             if (argindex >= argc) {
-                cout<< "Command wrong, there need parament after -c\n\n";
-                return 1;
+                try{
+                    throw(runtime_error("Command wrong, there need parameter after -c!\n\n"));
+                }catch(runtime_error err){
+                    cout<<err.what()<<endl;
+                    exit(0);    
+                }
             }
             file = argv[argindex];
             type = FIND_LEN;
@@ -50,17 +61,43 @@ int fake_main(int argc, char * argv[]){
         else if(strcmp(argv[argindex],"-n") == 0){
             argindex++;
             if (argindex >= argc) {
-                cout<< "Command wrong, there need parament after -n\n\n";
-                return 1;
+                try{
+                    throw(runtime_error("Command wrong, there need parameter after -n!\n\n"));
+                }catch(runtime_error err){
+                    cout<<err.what()<<endl;
+                    exit(0);    
+                }
             }
-            num = argv[argindex][0] - '0';
+            try{
+                num = 0;
+                for(int i = 0; i < strlen(argv[argindex]);i++){
+                    num = num * 10;
+                    if(argv[argindex][0]<'0' || argv[argindex][0]>'9')
+                        throw("Command wrong, the parameter after -n must be number!\n\n");
+                    num += argv[argindex][0] - '0';
+                }    
+            }catch(const char *msg){
+                cout<<msg<<endl;
+                exit(0);
+            }
             argindex++;
         }
         else if(strcmp(argv[argindex],"-h") == 0){
             argindex++;
             if (argindex >= argc) {
-                cout<< "Command wrong, there need parament after -h\n\n";
-                return 1;
+                try{
+                    throw(runtime_error("Command wrong, there need parameter after -h!\n\n"));
+                }catch(runtime_error err){
+                    cout<<err.what()<<endl;
+                    exit(0);    
+                }
+            }
+            try{
+                if(argv[argindex][0]<'a' || argv[argindex][0]>'z')   
+                    throw("Command wrong, the parameter after -h must be a lower case!\n\n");
+            }catch(const char *msg){
+                cout<<msg<<endl;
+                exit(0);
             }
             begin = argv[argindex][0];
             argindex++;
@@ -68,27 +105,41 @@ int fake_main(int argc, char * argv[]){
         else if(strcmp(argv[argindex],"-t") == 0){
             argindex++;
             if (argindex >= argc) {
-                cout<< "Command wrong, there need parament after -t\n\n";
-                return 1;
+                try{
+                    throw(runtime_error("Command wrong, there need parameter after -t!\n\n"));
+                }catch(runtime_error err){
+                    cout<<err.what()<<endl;
+                    exit(0);    
+                }
             }
-            cout <<argv[argindex+1][0]<<endl;
-            if(argv[argindex+1][0] == 'v') {
-                cout<< " ------" <<endl;
+            try{
+                if(argv[argindex][0]<'a' || argv[argindex][0]>'z')   
+                    throw("Command wrong, the parameter after -t must be a lower case!\n\n");
+            }catch(const char *msg){
+                cout<<msg<<endl;
+                exit(0);
             }
             end = argv[argindex][0];
-            cout << "end :"<< end<<endl;
             argindex++;
         }
         else {
-            cout << "Command wrong,-n,-h,-t,-w,-c is needed\n\n";
-            return 1;
+            try{
+                throw(runtime_error("Command wrong,-n,-h,-t,-w,-c is needed!\n\n"));
+            }catch(runtime_error err){
+                cout<<err.what()<<endl;
+                exit(0);    
+            }
         }
     }
     if(argc > argindex) {
-        cout << "Command wrong,-n,-h,-t,-w,-c is needed\n\n";
-        return 1;
+        try{
+            throw(runtime_error("Command wrong,-n,-h,-t,-w,-c is needed!\n\n"));
+        }catch(runtime_error err){
+            cout<<err.what()<<endl;
+            exit(0);    
+        }
     }
-   // cout << file << endl;
+    // cout << file << endl;
     Core* core = new Core(file);
     if(type == FIND_NUM) {
         char* result[20] = {0};
@@ -130,41 +181,41 @@ int fake_main(int argc, char * argv[]){
 int main(int argc, const char * argv[]){
   
  //---------测试方法1---------
-    string passage;
-    ifstream in;
-    in.open("./test/cmd.txt");
-    getline(in, passage);
-    cout << "1\n";
-    do{
-        int num = 0 ;
-        char *arg[30] = {0};
-        int len = (int)passage.length();
-        int flag = 0;
-        int site = 0;
-        arg[num] = new char[40]();
-        cout <<passage;
-        for(int i=0; i<len ;i++) {
-            if(passage[i]== ' ' ){
-                if(flag == 1) {
-                    flag = 0;
-                    num ++;
-                    arg[num] = new char[20]();
-                    site = 0;
-                }
-            }
-            else {
-                arg[num][site] = passage[i];
-                site++;
-                flag = 1;
-            }
-        }
-        num++;
-        for(int i=0 ;i<num ;i++){
-            cout << arg[i]<<endl;
-        }
-        fake_main(num, arg);
-        getline(in, passage);
-    }while(!(in.eof()));
+    // string passage;
+    // ifstream in;
+    // in.open("./test/cmd.txt");
+    // getline(in, passage);
+    // cout << "1\n";
+    // do{
+    //     int num = 0 ;
+    //     char *arg[30] = {0};
+    //     int len = (int)passage.length();
+    //     int flag = 0;
+    //     int site = 0;
+    //     arg[num] = new char[40]();
+    //     cout <<passage;
+    //     for(int i=0; i<len ;i++) {
+    //         if(passage[i]== ' ' ){
+    //             if(flag == 1) {
+    //                 flag = 0;
+    //                 num ++;
+    //                 arg[num] = new char[20]();
+    //                 site = 0;
+    //             }
+    //         }
+    //         else {
+    //             arg[num][site] = passage[i];
+    //             site++;
+    //             flag = 1;
+    //         }
+    //     }
+    //     num++;
+    //     for(int i=0 ;i<num ;i++){
+    //         cout << arg[i]<<endl;
+    //     }
+        fake_main(argc,argv);
+        // getline(in, passage);
+    // }while(!(in.eof()));
 //
     
     
@@ -182,7 +233,7 @@ int main(int argc, const char * argv[]){
     
     
     
- // ----------测试方法3---------
+//  // ----------测试方法3---------
 //    int arrnum = 50;
 //    char* input[50] =  {"due","to","pose","uncertainty","merely","executing","a","plannedtobe","stable","grasp","usually","results","in","an","unstable","grasp","in","the","physical","world","in","our","previous","work","k","we","proposed","a","tactile","experience","based","grasping","pipeline","which","utilizes","tactile","feedback","to","adjust","hand","posture","during","the","grasping","task","of","known","objects","and","improves"};
 //    core = new Core(input,arrnum);

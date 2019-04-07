@@ -1,0 +1,155 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - test_test.info - /home/dyf0202/software/Software_432/lab1_final/Header.h</title>
+  <link rel="stylesheet" type="text/css" href="../../../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../../../index.html">top level</a> - <a href="index.html">home/dyf0202/software/Software_432/lab1_final</a> - Header.h<span style="font-size: 80%;"> (source / <a href="Header.h.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">test_test.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">4</td>
+            <td class="headerCovTableEntry">4</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2019-04-07 16:02:16</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">1</td>
+            <td class="headerCovTableEntry">1</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr><td><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : //</a>
+<span class="lineNum">       2 </span>            : //  Header.h
+<span class="lineNum">       3 </span>            : //  lab1_final
+<span class="lineNum">       4 </span>            : //
+<span class="lineNum">       5 </span>            : //  Created by apple on 2019/4/1.
+<span class="lineNum">       6 </span>            : //  Copyright © 2019年 apple. All rights reserved.
+<span class="lineNum">       7 </span>            : //
+<span class="lineNum">       8 </span>            : 
+<span class="lineNum">       9 </span>            : #ifndef Header_h
+<span class="lineNum">      10 </span>            : #define Header_h
+<span class="lineNum">      11 </span>            : 
+<span class="lineNum">      12 </span>            : #include &lt;iostream&gt;
+<span class="lineNum">      13 </span>            : #include &lt;string&gt;
+<span class="lineNum">      14 </span>            : #include &lt;fstream&gt;
+<span class="lineNum">      15 </span>            : #include &lt;vector&gt;
+<span class="lineNum">      16 </span>            : 
+<span class="lineNum">      17 </span>            : #define MAX_WORD_LEN 99
+<span class="lineNum">      18 </span>            : #define MAX_WORD_NUM 100
+<span class="lineNum">      19 </span>            : #define FIND_LEN 1
+<span class="lineNum">      20 </span>            : #define FIND_NUM 2
+<span class="lineNum">      21 </span>            : #define FIND_SPECIFIC_NUM 3
+<span class="lineNum">      22 </span>            : 
+<span class="lineNum">      23 </span>            : using namespace std;
+<span class="lineNum">      24 </span>            : 
+<span class="lineNum">      25 </span>            : class Core {
+<span class="lineNum">      26 </span>            :     
+<span class="lineNum">      27 </span>            : public:
+<span class="lineNum">      28 </span>            :     char ** words_;
+<span class="lineNum">      29 </span>            :     int len_;
+<span class="lineNum">      30 </span>            :     
+<span class="lineNum">      31 </span>            :     Core();
+<span class="lineNum">      32 </span>            :     Core(const char * filename) ;
+<span class="lineNum">      33 </span>            :     Core(char * words[], int len) ;
+<span class="lineNum">      34 </span>            :     ~Core();
+<span class="lineNum">      35 </span>            :     int gen_chain_word(char* words[], int len, char* result[], char head, char tail);
+<span class="lineNum">      36 </span>            :     int gen_chain_char(char* words[], int len, char* result[], char head, char tail);
+<span class="lineNum">      37 </span>            :     int* gen_chain_specific_word(char* words[], int len, vector&lt;vector&lt;char *&gt; &gt; &amp;result, char head, char tail, int num);
+<span class="lineNum">      38 </span>            : 
+<span class="lineNum">      39 </span>            : private:
+<span class="lineNum">      40 </span>            :     int check(char* words[], int len, char head, char tail);
+<span class="lineNum">      41 </span>            :     void Build_Wordlist(char* words[], int len, int type);
+<span class="lineNum">      42 </span>            :     void clean();
+<span class="lineNum">      43 </span>            :     char** Get_word(const char* filename);
+<span class="lineNum">      44 </span>            :     int Find_Wordlist_(const int num,const char begin ,const char end,const int type);
+<span class="lineNum">      45 </span>            : };
+<span class="lineNum">      46 </span>            : 
+<span class="lineNum">      47 </span>            : 
+<span class="lineNum">      48 </span>            : typedef struct _EngLex {
+<span class="lineNum">      49 </span>            :     char str[MAX_WORD_LEN+1];
+<a name="50"><span class="lineNum">      50 </span>            :     int len ;</a>
+<span class="lineNum">      51 </span>            :     char first_letter, last_letter;
+<span class="lineNum">      52 </span><span class="lineCov">        101 :     _EngLex(){</span>
+<span class="lineNum">      53 </span><span class="lineCov">        101 :         len = 0;</span>
+<span class="lineNum">      54 </span><span class="lineCov">        101 :     }</span>
+<span class="lineNum">      55 </span>            : } EngLex;
+<span class="lineNum">      56 </span>            : 
+<span class="lineNum">      57 </span>            : 
+<span class="lineNum">      58 </span><span class="lineCov">          1 : EngLex word_list[MAX_WORD_NUM+1];</span>
+<span class="lineNum">      59 </span>            : int word_num;
+<span class="lineNum">      60 </span>            : int G[MAX_WORD_NUM+1][MAX_WORD_NUM+1] = {0};
+<span class="lineNum">      61 </span>            : 
+<span class="lineNum">      62 </span>            : int word_count;
+<span class="lineNum">      63 </span>            : int bc[MAX_WORD_NUM+1];
+<span class="lineNum">      64 </span>            : int step;
+<span class="lineNum">      65 </span>            : int max_path_value = 0;
+<span class="lineNum">      66 </span>            : int max_path[MAX_WORD_NUM+1];
+<span class="lineNum">      67 </span>            : int path_value = 0  ;
+<span class="lineNum">      68 </span>            : int path[MAX_WORD_NUM+1];
+<span class="lineNum">      69 </span>            : int end_path_value = 0;
+<span class="lineNum">      70 </span>            : int end_path[MAX_WORD_NUM+1] ;
+<span class="lineNum">      71 </span>            : int spe_path_count =0 ;
+<span class="lineNum">      72 </span>            : int specific_path[8888][MAX_WORD_NUM+1];
+<span class="lineNum">      73 </span>            : 
+<span class="lineNum">      74 </span>            : int Compare(const char* a, const char* b) ;
+<span class="lineNum">      75 </span>            : int Partition(int p, int r, char* words[]);
+<span class="lineNum">      76 </span>            : void Quick_sort(int p,int r, char * words[]);
+<span class="lineNum">      77 </span>            : int Delete_dup(int num, char* words[]);
+<span class="lineNum">      78 </span>            : 
+<span class="lineNum">      79 </span>            : #endif /* Header_h */
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.12</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>
